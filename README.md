@@ -2,7 +2,7 @@
 
 This video covers installing the Frigate add-on, configuring frigate.yaml to add IP or USB cameras, and enabling object detection. You’ll also learn how to set up MQTT credentials and add the Frigate HACS integration, which converts detected objects into entities you can use to trigger automations in Home Assistant.
 
-▶️ [Watch the video here](https://youtu.be/jqGvk1v8W04)  
+▶️ [Watch the video here](https://youtu.be/PwqESoIVcqc)  
 
 ### ⚙️ Frigate configuration files used in this video
 
