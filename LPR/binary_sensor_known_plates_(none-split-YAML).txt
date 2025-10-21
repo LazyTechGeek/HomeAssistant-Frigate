@@ -1,0 +1,54 @@
+template:
+  - trigger:
+      platform: mqtt
+      topic: frigate/events
+   binary_sensor:
+      - name: Dave Car Detected
+        unique_id: binary_sensor.CAR_DETECTED_SENSOR_NAME
+        device_class: presence
+        state: >
+          {#--- Parse payload ---#}
+          {% set p = trigger.payload_json | default({}, true) %}
+          {% set t = p.get('type') %}
+          {% set af = p.get('after') %}
+          {% set bf = p.get('before') %}
+          {% set data = bf if t == 'end' else af %}
+
+          {#--- Pull sub_label robustly: can be string or [label,score] ---#}
+          {% set s = (data.get('sub_label') if data is mapping else none) %}
+          {% if s is string %}
+            {% set plate_label = s %}
+          {% elif s is sequence and s|length > 0 %}
+            {% set plate_label = s[0] %}
+          {% else %}
+            {% set plate_label = none %}
+          {% endif %}
+
+          {# Current state (normalize unknown/unavailable to false) #}
+          {% set current = is_state('binary_sensor.CAR_DETECTED_SENSOR_NAME','on') %}
+
+         {#--- State machine ---#}
+          {% if plate_label == 'YOUR_LABEL_NAME' %}
+            {% if t == 'end' %}
+              false
+            {% else %}
+              true
+            {% endif %}
+          {% else %}
+            {{ 'true' if current else 'false' }}
+          {% endif %}
+        attributes:
+          last_event_type: "{{ trigger.payload_json.get('type') | default('') }}"
+          last_camera: >
+            {% set p = trigger.payload_json | default({}, true) %}
+            {% set t = p.get('type') %}
+            {% set data = p.get('before') if t == 'end' else p.get('after') %}
+            {{ data.get('camera') if data is mapping else '' }}
+          last_sub_label: >
+            {% set p = trigger.payload_json | default({}, true) %}
+            {% set t = p.get('type') %}
+            {% set data = p.get('before') if t == 'end' else p.get('after') %}
+            {% set s = (data.get('sub_label') if data is mapping else none) %}
+            {% if s is string %}{{ s }}
+            {% elif s is sequence and s|length > 0 %}{{ s[0] }}
+            {% else %}{% endif %}

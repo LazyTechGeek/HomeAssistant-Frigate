@@ -1,0 +1,19 @@
+- trigger:
+    - platform: mqtt
+      topic: frigate/events
+  condition:
+    - "{{ trigger.payload_json['after']['camera'] == 'CameraName' }}"
+    - "{{ trigger.payload_json['after']['label'] == 'car' }}"
+  binary_sensor:
+    - name: Parking Area Car Sensor
+      unique_id: car_in_ZoneName
+      state: >
+        {% set after_zones = trigger.payload_json.get('after', {}).get('current_zones', []) %}
+        {% set before_zones = trigger.payload_json.get('before', {}).get('current_zones', []) %}
+        {% if 'ZoneName' in after_zones and 'ZoneName' not in before_zones %}
+          true
+        {% elif 'ZoneName' not in after_zones and 'ZoneName' in before_zones %}
+          false
+        {% else %}
+          {{ this.state }}
+        {% endif %}
