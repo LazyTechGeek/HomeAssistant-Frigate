@@ -1,0 +1,28 @@
+alias: Notify Car Arriving
+description: ""
+triggers:
+  - trigger: state
+    entity_id:
+      - binary_sensor.CAR_DETECTED_SENSOR_NAME
+    from: "off"
+    to: "on"
+conditions: []
+actions:
+  - action: notify.mobile # or notify.mobile_app_YOU_MOBILE_NAME
+    metadata: {}
+    data:
+      message: A guest has just arrived. I hope you’re tidying up!
+  - action: notify.alexa_media_YOUR_AMAZON_ECHO
+    metadata: {}
+    data:
+      message: >-
+        Dave, someone who looks suspiciously like you just pulled into the
+        driveway. I really hope you’re not sitting on the couch with your feet
+        up having a beer… because you were supposed to be tidying up before any
+        guests arrived!
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 10
+      milliseconds: 0
+mode: single
