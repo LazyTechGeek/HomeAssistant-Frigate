@@ -1,0 +1,48 @@
+alias: Gorilla Man Opens Cupboard
+description: ""
+triggers:
+  - entity_id:
+      - binary_sensor.door_sensor_CHANGE-THIS-SENSOR
+    to: "on"
+    trigger: state
+    from: "off"
+actions:
+  - choose:
+      - conditions:
+          - condition: state
+            entity_id: sensor.fake_hallway_last_recognized_face_CHANGE-THIS-SENSOR
+            state: Gorilla_Man
+        sequence:
+          - data:
+              title: 🚨 Alert
+              message: 🦍 Gorilla Man has opened the cupboard!
+            action: notify.notify
+          - action: notify.alexa_media_YOUR_ECHO_DOT
+            metadata: {}
+            data:
+              message: >-
+                Dave, that weird guy who wears your clothes and puts on a
+                gorilla mask just entered your flat and opened the cupboard. I
+                think he’s found your secret stash of bananas.
+      - conditions:
+          - condition: template
+            value_template: >-
+              {{ states('sensor.fake_hallway_last_recognized_face_CHANGE-THIS-SENSOR') !=
+              'Gorilla_Man' }}
+        sequence:
+          - delay: "00:00:05"
+          - condition: state
+            entity_id: sensor.fake_hallway_last_recognized_face_CHANGE-THIS-SENSOR
+            state: Gorilla_Man
+          - data:
+              title: 🚨 Alert
+              message: 🦍 Gorilla Man (delayed detection) opened the cupboard!
+            action: notify.notify
+          - action: notify.alexa_media__YOUR_ECHO_DOT
+            metadata: {}
+            data:
+              message: >-
+                Dave, that weird guy who wears your clothes and puts on a
+                gorilla mask just entered your flat and opened the cupboard. I
+                think he’s found your secret stash of bananas.
+mode: single
