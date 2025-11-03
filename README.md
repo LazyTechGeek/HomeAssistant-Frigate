@@ -28,3 +28,15 @@ In this video, I’ll show you how to enable and configure Frigate’s built-in 
 - **[binary_sensor_known_plates_(split-YAML)](https://github.com/LazyTechGeek/HomeAssistant-Frigate/blob/main/LPR/binary_sensor_known_plates_(split-YAML).txt)**
 - **[binary_sensor_parking_area_car_(non-split-YAML)](https://github.com/LazyTechGeek/HomeAssistant-Frigate/blob/main/LPR/binary_sensor_parking_area_car_(non-split-YAML).txt)**
 - **[binary_sensor_parking_area_car_(split-YAML)](https://github.com/LazyTechGeek/HomeAssistant-Frigate/blob/main/LPR/binary_sensor_parking_area_car_(split-YAML).txt)**
+
+# Home Assistant + Frigate Facial Recognition (Part 3)
+
+In this video, I’ll show you how to enable and configure Frigate’s built-in Facial Recognition feature — from uploading faces and fine-tuning detection settings, to testing recognition accuracy and creating automations that trigger when specific people are detected.
+
+▶️ [Watch the video here](https://youtu.be/lwRiTqqkdpU)
+
+### ⚙️ Frigate configuration files used in this video
+
+- **[automation_notify_cupboard_door_opened](https://github.com/LazyTechGeek/HomeAssistant-Frigate/blob/main/Face_Recognition/automation_notify_cupboard_door_opened.txt)**
+- **[Facial Recognition Values](https://github.com/LazyTechGeek/HomeAssistant-Frigate/blob/main/Face_Recognition/face_recognition_values.txt)**
+- **[Enabling RTSP on Reolink Cameras](https://github.com/LazyTechGeek/HomeAssistant-Frigate/blob/main/Face_Recognition/Enabling_RTSP_on_Reolink_Cameras.pdf)**
