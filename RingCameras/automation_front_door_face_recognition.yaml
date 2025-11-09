@@ -1,0 +1,32 @@
+alias: When person detected at front door
+description: ""
+triggers:
+  - trigger: state
+    entity_id:
+      - binary_sensor.YOUR-CAMERA_person_occupancy
+    to:
+      - "on"
+actions:
+  - action: notify.notify
+    data:
+      message: There is a person outside
+  - action: notify.alexa_media_YOUR-AMAZON-ECHO
+    data:
+      message: There is a person outside
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 3
+      milliseconds: 0
+  - wait_template: >
+      {% set v = states('sensor.YOUR-CAMERA_last_recognized_face') | trim %} {{
+      v|lower not in ['unknown', 'unavailable', 'none'] and v != '' }}
+    timeout: "00:00:15"
+    continue_on_timeout: true
+  - action: notify.notify
+    data:
+      message: It's {{ states('sensor.YOUR-CAMERA_last_recognized_face') }}
+  - action: notify.alexa_media_YOUR-AMAZON-ECHO
+    data:
+      message: It's {{ states('sensor.YOUR-CAMERA_last_recognized_face') }}
+mode: restart
