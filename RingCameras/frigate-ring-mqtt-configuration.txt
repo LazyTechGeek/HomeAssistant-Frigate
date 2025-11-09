@@ -1,0 +1,130 @@
+mqtt:
+  enabled: true
+  host: 192.168.1.113
+  user: EnterUserNameHere
+  password: EnterPasswordHere
+
+
+###################################
+## Stream URLs and core services ##
+###################################
+
+go2rtc:
+  streams:
+
+    # Reolink cameras
+    kitchen_main:
+      - rtsp://admin:SampleDemo123*@192.168.1.223:554/h264Preview_01_main
+    kitchen_sub:
+      - rtsp://admin:SampleDemo123*@192.168.1.223:554/h264Preview_01_sub
+
+    # Ring doorbell via Ring-MQTT
+    front_door:
+        - rtsp://username:password@03cabcc9-ring-mqtt:8554/90486cedd14e_live
+
+############
+## Camera ##
+############
+
+cameras:
+
+# Reolink Cameras
+
+  kitchen:
+    ffmpeg:
+      inputs:
+        - path: rtsp://127.0.0.1:8554/kitchen_sub
+          input_args: preset-rtsp-restream
+          roles:
+            - detect
+        - path: rtsp://127.0.0.1:8554/kitchen_main
+          input_args: preset-rtsp-restream
+          roles:
+            - record
+    objects:
+      track:
+        - person
+    record:
+      enabled: false
+
+# Ring Camera
+
+  front_door:
+    ffmpeg:
+      inputs:
+        - path: rtsp://127.0.0.1:8554/front_door
+          input_args: preset-rtsp-restream
+          roles:
+            - detect
+    objects:
+      track:
+        - person
+
+
+##########################
+##   Global Variables   ##
+## Apply to All Cameras ##
+##########################
+
+record:
+  enabled: false
+  retain:
+    days: 3
+    mode: motion                # motion = on motion, all = continuous recording
+  alerts:
+    retain:
+      days: 30                  # Default: 14
+      mode: motion
+  detections:
+    retain:
+      days: 30                  # Default: 14
+      mode: motion
+motion:
+  threshold: 30                 # Default: 30
+                                # 10 = High sensitivity
+                                # 30 = Medium sensitivity
+                                # 50 = Low sensitivity
+
+
+#######################
+## Detectors + Model ##
+#######################
+
+detectors:                      # default: CPU - see supported hardware list: https://docs.frigate.video/configuration/object_detectors/
+  ov:
+    type: openvino
+    device: CPU
+
+model:                          # See reference:: https://docs.frigate.video/configuration/reference/
+  width: 300
+  height: 300
+  input_tensor: nhwc
+  input_pixel_format: bgr
+  path: /openvino-model/ssdlite_mobilenet_v2.xml
+  labelmap_path: /openvino-model/coco_91cl_bkgr.txt
+
+
+detect:
+  enabled: true
+  width: 960                    # default: use native stream resolution
+  height: 540                   # default: use native stream resolution
+  fps: 5                        # default: 1/2 the frame rate
+  max_disappeared: 25           # default: 5
+version: 0.16-0
+semantic_search:
+  enabled: false                # A minimum of 8GB of RAM is required to use Semantic Search
+  model_size: small             # small uses a lightweight FaceNet model optimized for most CPUs, large uses an ArcFace model that automatically runs on the GPU if available
+
+face_recognition:
+  enabled: true                 # Set to true to enable Face Recognition (must also add 'person'to objectsto track for it to work)
+  detection_threshold: 0.7      # Default: 0.7
+  min_area: 500                 # Default: 500 (Lower to increase sensitivity but risk false positives)
+  model_size: small             # or 'large' if you have a GPU
+  unknown_score: 0.8            # Default: 0.8
+  recognition_threshold: 0.9    # Default: 0.9
+  min_faces: 1                  # Default: 1
+  save_attempts: 100            # Default: 100
+  blur_confidence_filter: true  # Default: True
+
+lpr:
+  enabled: true               # Set to true to enable License Plate Recognition (must also add 'car' to objects to track for it to work)
