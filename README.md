@@ -50,3 +50,4 @@ In this video, I’ll show you how to use your Ring cameras with Frigate by crea
 ### ⚙️ Frigate configuration files used in this video
 
 - **[automation front door face recognition](https://github.com/LazyTechGeek/HomeAssistant-Frigate/blob/main/RingCameras/automation_front_door_face_recognition.txt)**
+- **[Frigate ring mqtt configuration](https://github.com/LazyTechGeek/HomeAssistant-Frigate/blob/main/RingCameras/frigate-ring-mqtt-configuration.txt)** 
