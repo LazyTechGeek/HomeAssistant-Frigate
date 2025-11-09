@@ -40,3 +40,13 @@ In this video, I’ll show you how to enable and configure Frigate’s built-in 
 - **[automation_notify_cupboard_door_opened](https://github.com/LazyTechGeek/HomeAssistant-Frigate/blob/main/Face_Recognition/automation_notify_cupboard_door_opened.txt)**
 - **[Facial Recognition Values](https://github.com/LazyTechGeek/HomeAssistant-Frigate/blob/main/Face_Recognition/face_recognition_values.txt)**
 - **[Enabling RTSP on Reolink Cameras](https://github.com/LazyTechGeek/HomeAssistant-Frigate/blob/main/Face_Recognition/Enabling_RTSP_on_Reolink_Cameras.pdf)**
+
+# Home Assistant + Frigate: How to Use Ring Cameras (RTSP via Ring-MQTT) (Part 4)
+
+In this video, I’ll show you how to use your Ring cameras with Frigate by creating RTSP video streams through Ring-MQTT.
+
+▶️ [Watch the video here](https://youtu.be/lwRiTqqkdpU)
+
+### ⚙️ Frigate configuration files used in this video
+
+- **[automation front door face recognition](https://github.com/LazyTechGeek/HomeAssistant-Frigate/blob/main/RingCameras/automation_front_door_face_recognition.txt)**
